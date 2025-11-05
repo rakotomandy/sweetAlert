@@ -1,318 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"> <!-- Character encoding for proper text display -->
-  <title>SweetAlert2 Cheat Sheet</title> <!-- Page title displayed in browser tab -->
-  
-  <!-- SweetAlert2 CSS: styles the alerts -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Character encoding for proper text display -->
+    <title>SweetAlert2 Cheat Sheet</title>
+    <!-- Page title displayed in browser tab -->
 
-<h1>SweetAlert2 Examples</h1> <!-- Heading of the page -->
-
-<!-- Buttons for triggering each SweetAlert2 example -->
-<button id="basicAlert">1. Basic Alert</button>
-<button id="titleTextAlert">2. Title & Text</button>
-<button id="successAlert">3. Success Alert</button>
-<button id="errorAlert">4. Error Alert</button>
-<button id="warningAlert">5. Warning Alert</button>
-<button id="infoAlert">6. Info Alert</button>
-<button id="questionAlert">7. Question Alert</button>
-<button id="confirmAlert">8. Confirm Alert</button>
-<button id="inputAlert">9. Input Prompt</button>
-<button id="selectAlert">10. Select Dropdown</button>
-<button id="checkboxAlert">11. Checkbox</button>
-<button id="htmlAlert">12. HTML Content</button>
-<button id="autoCloseAlert">13. Auto Close</button>
-<button id="timerProgressAlert">14. Timer + Progress</button>
-<button id="customButtonsAlert">15. Custom Buttons</button>
-<button id="imageAlert">16. Custom Image</button>
-<button id="ajaxAlert">17. AJAX Example</button>
-<button id="toastAlert">18. Toast Notification</button>
-<button id="multipleStepAlert">19. Multiple Step</button>
-<button id="positionAlert">20. Position Alert</button>
-
-<!-- SweetAlert2 JS library: required for alerts -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-
-<!-- jQuery library (for AJAX example only) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-// =====================
-// 1. Basic Alert
-// =====================
-document.getElementById("basicAlert").addEventListener("click", () => {
-  // Swal.fire() creates a simple alert with default settings
-  Swal.fire('Hello world!'); 
-});
-
-// =====================
-// 2. Title & Text
-// =====================
-document.getElementById("titleTextAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Hello!',           // Bold title of the alert
-    text: 'This is SweetAlert2.', // Normal text message
-    icon: 'info'               // Icon type: success, error, warning, info, question
-  });
-});
-
-// =====================
-// 3. Success Alert
-// =====================
-document.getElementById("successAlert").addEventListener("click", () => {
-  // Short form of Swal.fire with title, text, and icon
-  Swal.fire('Good job!', 'You clicked the button.', 'success');
-});
-
-// =====================
-// 4. Error Alert
-// =====================
-document.getElementById("errorAlert").addEventListener("click", () => {
-  Swal.fire('Oops...', 'Something went wrong!', 'error');
-});
-
-// =====================
-// 5. Warning Alert
-// =====================
-document.getElementById("warningAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Warning!', // Title
-    text: 'Are you sure?', // Message
-    icon: 'warning'    // Warning icon
-  });
-});
-
-// =====================
-// 6. Info Alert
-// =====================
-document.getElementById("infoAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Information', // Title
-    text: 'Here is some information for you.', // Message
-    icon: 'info'          // Info icon
-  });
-});
-
-// =====================
-// 7. Question Alert
-// =====================
-document.getElementById("questionAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Question?', // Title
-    text: 'Do you want to continue?', // Message
-    icon: 'question'    // Question mark icon
-  });
-});
-
-// =====================
-// 8. Confirm Alert
-// =====================
-document.getElementById("confirmAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Are you sure?',            // Title
-    text: "You won't be able to revert this!", // Message
-    icon: 'warning',                   // Warning icon
-    showCancelButton: true,            // Show Cancel button
-    confirmButtonText: 'Yes, delete it!', // Text on confirm button
-    cancelButtonText: 'No, cancel!',      // Text on cancel button
-    reverseButtons: true               // Swap positions of buttons
-  }).then((result) => {
-    // .then() runs after user clicks confirm/cancel
-    if (result.isConfirmed) {
-      Swal.fire('Deleted!', 'Your item has been deleted.', 'success');
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire('Cancelled', 'Your item is safe :)', 'error');
-    }
-  });
-});
-
-// =====================
-// 9. Input Prompt
-// =====================
-document.getElementById("inputAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Enter your name', // Title
-    input: 'text',             // Input type: text
-    inputPlaceholder: 'Type your name here', // Placeholder inside input
-    showCancelButton: true     // Show Cancel button
-  }).then((result) => {
-    if (result.isConfirmed && result.value) { // If user clicked OK and entered text
-      Swal.fire(`Hello, ${result.value}!`);
-    }
-  });
-});
-
-// =====================
-// 10. Select Dropdown
-// =====================
-document.getElementById("selectAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Select your favorite color',
-    input: 'select',           // Dropdown select
-    inputOptions: {            // Options inside dropdown
-      red: 'Red',
-      blue: 'Blue',
-      green: 'Green'
-    },
-    inputPlaceholder: 'Select color',
-    showCancelButton: true
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire(`You selected: ${result.value}`); // Display chosen value
-    }
-  });
-});
-
-// =====================
-// 11. Checkbox
-// =====================
-document.getElementById("checkboxAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Terms & Conditions',
-    input: 'checkbox',        // Checkbox input
-    inputValue: 0,            // Default unchecked (0)
-    inputPlaceholder: 'I agree to the terms', // Text next to checkbox
-    showCancelButton: true,
-  }).then((result) => {
-    if (result.isConfirmed && result.value) { // Checked & confirmed
-      Swal.fire('Thank you!', 'You agreed to the terms.', 'success');
-    }
-  });
-});
-
-// =====================
-// 12. HTML Content
-// =====================
-document.getElementById("htmlAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: '<strong>HTML <u>example</u></strong>', // HTML title
-    icon: 'info',
-    html: 'You can use <b>HTML</b> content in SweetAlert2.', // HTML body content
-  });
-});
-
-// =====================
-// 13. Auto Close
-// =====================
-document.getElementById("autoCloseAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Auto close alert!',
-    text: 'I will close in 2 seconds.',
-    timer: 2000,              // Auto close after 2 seconds
-    showConfirmButton: false   // Hide OK button
-  });
-});
-
-// =====================
-// 14. Timer + Progress Bar
-// =====================
-document.getElementById("timerProgressAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Loading...',
-    timer: 3000,               // Auto close after 3 seconds
-    timerProgressBar: true,    // Show progress bar
-    didOpen: () => {           // Runs when alert opens
-      Swal.showLoading();      // Show loading spinner
-    }
-  });
-});
-
-// =====================
-// 15. Custom Buttons
-// =====================
-document.getElementById("customButtonsAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Custom Buttons!',
-    showCancelButton: true,
-    confirmButtonText: 'Cool', // Custom text for confirm
-    cancelButtonText: 'Nope',  // Custom text for cancel
-    buttonsStyling: true        // Apply default styling to buttons
-  });
-});
-
-// =====================
-// 16. Custom Image
-// =====================
-document.getElementById("imageAlert").addEventListener("click", () => {
-  Swal.fire({
-    title: 'Custom Image',
-    text: 'This is a cute image.',
-    imageUrl: 'https://placekitten.com/200/200', // URL of image
-    imageWidth: 200,   // Width of image
-    imageHeight: 200,  // Height of image
-    imageAlt: 'Kitten' // Alt text
-  });
-});
-
-// =====================
-// 17. AJAX Example
-// =====================
-document.getElementById("ajaxAlert").addEventListener("click", () => {
-  $.ajax({
-    url: 'https://jsonplaceholder.typicode.com/posts/1', // Fake API
-    method: 'GET',
-    success: function(response) { // Runs on success
-      Swal.fire('AJAX Success!', `Title: ${response.title}`, 'success');
-    },
-    error: function() { // Runs on error
-      Swal.fire('Oops...', 'Something went wrong!', 'error');
-    }
-  });
-});
-
-// =====================
-// 18. Toast Notification
-// =====================
-document.getElementById("toastAlert").addEventListener("click", () => {
-  Swal.fire({
-    toast: true,             // Small toast style
-    position: 'top-end',     // Top-right corner
-    icon: 'success',         // Icon
-    title: 'Signed in successfully',
-    showConfirmButton: false, // Hide OK button
-    timer: 3000,             // Auto close in 3 seconds
-    timerProgressBar: true   // Show progress bar
-  });
-});
-
-// =====================
-// 19. Multiple Step
-// =====================
-document.getElementById("multipleStepAlert").addEventListener("click", async () => {
-  // Await ensures first alert is answered before second shows
-  const { value: first } = await Swal.fire({
-    title: 'Step 1',
-    input: 'text',
-    inputPlaceholder: 'Enter something'
-  });
-  if (first) {
-    const { value: second } = await Swal.fire({
-      title: 'Step 2',
-      input: 'text',
-      inputPlaceholder: 'Enter something else'
-    });
-    if (second) {
-      Swal.fire(`You entered: ${first} & ${second}`); // Show combined result
-    }
+    <!-- SweetAlert2 CSS: styles the alerts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+  </head>
+  <style>
+  /* Container for buttons */
+  .alert-buttons {
+    display: flex;
+    flex-direction: column; /* vertical layout */
+    gap: 8px;               /* space between buttons */
+    max-width: 300px;        /* optional width */
+    margin: 20px auto;       /* center on page */
   }
-});
 
-// =====================
-// 20. Position Alert
-// =====================
-document.getElementById("positionAlert").addEventListener("click", () => {
-  Swal.fire({
-    position: 'bottom-start', // Position of alert
-    icon: 'info',
-    title: 'Positioned Alert',
-    showConfirmButton: false, // Hide OK button
-    timer: 2000               // Auto close in 2 seconds
-  });
-});
+  /* Button styling */
+  .alert-buttons button {
+    padding: 10px 15px;      /* vertical & horizontal padding */
+    font-size: 16px;         /* readable text */
+    font-weight: 500;
+    border: none;            /* remove default border */
+    border-radius: 6px;      /* rounded corners */
+    background-color: #4f46e5; /* purple background */
+    color: white;            /* text color */
+    cursor: pointer;         /* pointer on hover */
+    transition: background-color 0.2s, transform 0.2s;
+  }
 
-</script>
-</body>
+  /* Hover effect */
+  .alert-buttons button:hover {
+    background-color: #4338ca; /* darker purple */
+    transform: translateY(-2px); /* slight lift effect */
+  }
+
+  /* Optional: focus effect for accessibility */
+  .alert-buttons button:focus {
+    outline: 2px solid #818cf8; /* soft blue outline */
+    outline-offset: 2px;
+  }
+</style>
+  <body>
+    <h1>SweetAlert2 Examples</h1>
+    <!-- Heading of the page -->
+
+    <!-- Buttons for triggering each SweetAlert2 example -->
+<div class="alert-buttons">
+  <button id="basicAlert">1. Basic Alert</button>
+  <button id="titleTextAlert">2. Title & Text</button>
+  <button id="successAlert">3. Success Alert</button>
+  <button id="errorAlert">4. Error Alert</button>
+  <button id="warningAlert">5. Warning Alert</button>
+  <button id="infoAlert">6. Info Alert</button>
+  <button id="questionAlert">7. Question Alert</button>
+  <button id="confirmAlert">8. Confirm Alert</button>
+  <button id="inputAlert">9. Input Prompt</button>
+  <button id="selectAlert">10. Select Dropdown</button>
+  <button id="checkboxAlert">11. Checkbox</button>
+  <button id="htmlAlert">12. HTML Content</button>
+  <button id="autoCloseAlert">13. Auto Close</button>
+  <button id="timerProgressAlert">14. Timer + Progress</button>
+  <button id="customButtonsAlert">15. Custom Buttons</button>
+  <button id="imageAlert">16. Custom Image</button>
+  <button id="ajaxAlert">17. AJAX Example</button>
+  <button id="toastAlert">18. Toast Notification</button>
+  <button id="multipleStepAlert">19. Multiple Step</button>
+  <button id="positionAlert">20. Position Alert</button>
+</div>
+
+    <!-- SweetAlert2 JS library: required for alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <!-- jQuery library (for AJAX example only) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      // =====================
+      // 1. Basic Alert
+      // =====================
+      document.getElementById("basicAlert").addEventListener("click", () => {
+        // Swal.fire() creates a simple alert with default settings
+        Swal.fire("Hello world!");
+      });
+
+      // =====================
+      // 2. Title & Text
+      // =====================
+      document
+        .getElementById("titleTextAlert")
+        .addEventListener("click", () => {
+          Swal.fire({
+            title: "Hello!", // Bold title of the alert
+            text: "This is SweetAlert2.", // Normal text message
+            icon: "info", // Icon type: success, error, warning, info, question
+          });
+        });
+
+      // =====================
+      // 3. Success Alert
+      // =====================
+      document.getElementById("successAlert").addEventListener("click", () => {
+        // Short form of Swal.fire with title, text, and icon
+        Swal.fire("Good job!", "You clicked the button.", "success");
+      });
+
+      // =====================
+      // 4. Error Alert
+      // =====================
+      document.getElementById("errorAlert").addEventListener("click", () => {
+        Swal.fire("Oops...", "Something went wrong!", "error");
+      });
+
+      // =====================
+      // 5. Warning Alert
+      // =====================
+      document.getElementById("warningAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Warning!", // Title
+          text: "Are you sure?", // Message
+          icon: "warning", // Warning icon
+        });
+      });
+
+      // =====================
+      // 6. Info Alert
+      // =====================
+      document.getElementById("infoAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Information", // Title
+          text: "Here is some information for you.", // Message
+          icon: "info", // Info icon
+        });
+      });
+
+      // =====================
+      // 7. Question Alert
+      // =====================
+      document.getElementById("questionAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Question?", // Title
+          text: "Do you want to continue?", // Message
+          icon: "question", // Question mark icon
+        });
+      });
+
+      // =====================
+      // 8. Confirm Alert
+      // =====================
+      document.getElementById("confirmAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Are you sure?", // Title
+          text: "You won't be able to revert this!", // Message
+          icon: "warning", // Warning icon
+          showCancelButton: true, // Show Cancel button
+          confirmButtonText: "Yes, delete it!", // Text on confirm button
+          cancelButtonText: "No, cancel!", // Text on cancel button
+          reverseButtons: true, // Swap positions of buttons
+        }).then((result) => {
+          // .then() runs after user clicks confirm/cancel
+          if (result.isConfirmed) {
+            Swal.fire("Deleted!", "Your item has been deleted.", "success");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            Swal.fire("Cancelled", "Your item is safe :)", "error");
+          }
+        });
+      });
+
+      // =====================
+      // 9. Input Prompt
+      // =====================
+      document.getElementById("inputAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Enter your name", // Title
+          input: "text", // Input type: text
+          inputPlaceholder: "Type your name here", // Placeholder inside input
+          showCancelButton: true, // Show Cancel button
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            // If user clicked OK and entered text
+            Swal.fire(`Hello, ${result.value}!`);
+          }
+        });
+      });
+
+      // =====================
+      // 10. Select Dropdown
+      // =====================
+      document.getElementById("selectAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Select your favorite color",
+          input: "select", // Dropdown select
+          inputOptions: {
+            // Options inside dropdown
+            red: "Red",
+            blue: "Blue",
+            green: "Green",
+          },
+          inputPlaceholder: "Select color",
+          showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(`You selected: ${result.value}`); // Display chosen value
+          }
+        });
+      });
+
+      // =====================
+      // 11. Checkbox
+      // =====================
+      document.getElementById("checkboxAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Terms & Conditions",
+          input: "checkbox", // Checkbox input
+          inputValue: 0, // Default unchecked (0)
+          inputPlaceholder: "I agree to the terms", // Text next to checkbox
+          showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            // Checked & confirmed
+            Swal.fire("Thank you!", "You agreed to the terms.", "success");
+          }
+        });
+      });
+
+      // =====================
+      // 12. HTML Content
+      // =====================
+      document.getElementById("htmlAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "<strong>HTML <u>example</u></strong>", // HTML title
+          icon: "info",
+          html: "You can use <b>HTML</b> content in SweetAlert2.", // HTML body content
+        });
+      });
+
+      // =====================
+      // 13. Auto Close
+      // =====================
+      document
+        .getElementById("autoCloseAlert")
+        .addEventListener("click", () => {
+          Swal.fire({
+            title: "Auto close alert!",
+            text: "I will close in 2 seconds.",
+            timer: 2000, // Auto close after 2 seconds
+            showConfirmButton: false, // Hide OK button
+          });
+        });
+
+      // =====================
+      // 14. Timer + Progress Bar
+      // =====================
+      document
+        .getElementById("timerProgressAlert")
+        .addEventListener("click", () => {
+          Swal.fire({
+            title: "Loading...",
+            timer: 3000, // Auto close after 3 seconds
+            timerProgressBar: true, // Show progress bar
+            didOpen: () => {
+              // Runs when alert opens
+              Swal.showLoading(); // Show loading spinner
+            },
+          });
+        });
+
+      // =====================
+      // 15. Custom Buttons
+      // =====================
+      document
+        .getElementById("customButtonsAlert")
+        .addEventListener("click", () => {
+          Swal.fire({
+            title: "Custom Buttons!",
+            showCancelButton: true,
+            confirmButtonText: "Cool", // Custom text for confirm
+            cancelButtonText: "Nope", // Custom text for cancel
+            buttonsStyling: true, // Apply default styling to buttons
+          });
+        });
+
+      // =====================
+      // 16. Custom Image
+      // =====================
+      document.getElementById("imageAlert").addEventListener("click", () => {
+        Swal.fire({
+          title: "Custom Image",
+          text: "This is a cute image.",
+          imageUrl: "https://placekitten.com/200/200", // URL of image
+          imageWidth: 200, // Width of image
+          imageHeight: 200, // Height of image
+          imageAlt: "Kitten", // Alt text
+        });
+      });
+
+      // =====================
+      // 17. AJAX Example
+      // =====================
+      document.getElementById("ajaxAlert").addEventListener("click", () => {
+        $.ajax({
+          url: "https://jsonplaceholder.typicode.com/posts/1", // Fake API
+          method: "GET",
+          success: function (response) {
+            // Runs on success
+            Swal.fire("AJAX Success!", `Title: ${response.title}`, "success");
+          },
+          error: function () {
+            // Runs on error
+            Swal.fire("Oops...", "Something went wrong!", "error");
+          },
+        });
+      });
+
+      // =====================
+      // 18. Toast Notification
+      // =====================
+      document.getElementById("toastAlert").addEventListener("click", () => {
+        Swal.fire({
+          toast: true, // Small toast style
+          position: "top-end", // Top-right corner
+          icon: "success", // Icon
+          title: "Signed in successfully",
+          showConfirmButton: false, // Hide OK button
+          timer: 3000, // Auto close in 3 seconds
+          timerProgressBar: true, // Show progress bar
+        });
+      });
+
+      // =====================
+      // 19. Multiple Step
+      // =====================
+      document
+        .getElementById("multipleStepAlert")
+        .addEventListener("click", async () => {
+          // Await ensures first alert is answered before second shows
+          const { value: first } = await Swal.fire({
+            title: "Step 1",
+            input: "text",
+            inputPlaceholder: "Enter something",
+          });
+          if (first) {
+            const { value: second } = await Swal.fire({
+              title: "Step 2",
+              input: "text",
+              inputPlaceholder: "Enter something else",
+            });
+            if (second) {
+              Swal.fire(`You entered: ${first} & ${second}`); // Show combined result
+            }
+          }
+        });
+
+      // =====================
+      // 20. Position Alert
+      // =====================
+      document.getElementById("positionAlert").addEventListener("click", () => {
+        Swal.fire({
+          position: "bottom-start", // Position of alert
+          icon: "info",
+          title: "Positioned Alert",
+          showConfirmButton: false, // Hide OK button
+          timer: 2000, // Auto close in 2 seconds
+        });
+      });
+    </script>
+  </body>
 </html>
